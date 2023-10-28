@@ -9,7 +9,7 @@ class Course(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     description = models.CharField(max_length=500)
-    
+
     @property
     def is_available(self):
         date = timezone.now()
@@ -17,17 +17,18 @@ class Course(models.Model):
             return True
         else:
             return False
-"""
+
+
 class Student():
     def approval_percentaje(self, score, scale):
         try:
             percentaje = (score*100)/scale
             return percentaje
-        except Exception, error:
+        except Exception as error:
             return error
+
     def student_registration(self, course):
         if course.is_available:
             return "Estudiante puede matricularse"
         else:
             return "Estudiante no se puede matricular"
-"""
