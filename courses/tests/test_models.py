@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import mock
 from mixer.backend.django import mixer
 from django.utils import timezone
 from django.utils.timezone import make_aware
 from datetime import datetime
 import pytest
-from courses.models import Student
+from courses.models import *
 
 
 @pytest.mark.django_db
@@ -63,3 +64,31 @@ class TestModels:
         assert course.definitive_score(
             exam1, weighing1, exam2, '50').args[0] == "can't multiply sequence by non-int of type 'float'"
         assert course.definitive_score(exam1, 100, 0, 0) == 3.0
+
+    def test_student_registration(self):
+        course_available = mock.Mock(Course)
+        course_not_available = mock.Mock(Course)
+
+        course_available.is_available = True
+        course_not_available.is_available = False
+
+        student = Student()
+
+        assert student.student_registration(
+            course_available) == "Estudiante puede matricularse"
+        assert student.student_registration(
+            course_not_available) == "Estudiante no se puede matricular"
+
+    def test_approved_course(self):
+        student_approved = mock.Mock(Student)
+        student_not_approved = mock.Mock(Student)
+
+        student_approved.approval_percentaje = 90
+        student_not_approved.approval_percentaje = 89
+
+        student = Student()
+
+        assert student.approved_course(
+            student_approved) == "El estudiante aprobo el curso"
+        assert student.approved_course(
+            student_not_approved) == "El estudiante no aprobo el curso"

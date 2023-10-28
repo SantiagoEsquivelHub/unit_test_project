@@ -39,3 +39,9 @@ class Student():
             return "Estudiante puede matricularse"
         else:
             return "Estudiante no se puede matricular"
+
+    def approved_course(self, student):
+        if student.approval_percentaje >= 90:
+            return "El estudiante aprobo el curso"
+        else:
+            return "El estudiante no aprobo el curso"
