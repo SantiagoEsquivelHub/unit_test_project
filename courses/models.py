@@ -18,6 +18,13 @@ class Course(models.Model):
         else:
             return False
 
+    def definitive_score(self, exam1, weighing1, exam2, weighing2):
+        try:
+            definitive_score = ((exam1*weighing1)+(exam2*weighing2))/100
+            return definitive_score
+        except Exception as error:
+            return error
+
 
 class Student():
     def approval_percentaje(self, score, scale):
